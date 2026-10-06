@@ -1,0 +1,291 @@
+/* Native <dialog> in the top layer, pinned to the right edge. No `display` here:
+   the UA keeps a closed dialog display: none. */
+.dialog {
+  position: fixed;
+  inset: 0 0 0 auto;
+  /* A strip of page always shows on phones: it says "overlay", and a tap on it closes */
+  width: min(28rem, calc(100% - 3rem));
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-left: var(--hairline) solid var(--border-strong);
+  background: var(--surface-raised);
+  color: var(--text);
+}
+/* Closed but still sliding out (BagDrawer.tsx): out of the top layer, so it needs
+   its own display and a layer above the header; the page under it is live */
+.dialog[data-leaving] {
+  display: block;
+  z-index: var(--z-modal);
+  pointer-events: none;
+}
+/* Graphite wash over the page: it reads as "behind", and taps on it close */
+.dialog::backdrop {
+  background: rgb(28 29 31 / 0.45);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* ---- Head: same strip height as the site header -------------------------- */
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--header-h);
+  padding-inline: var(--space-5);
+  border-bottom: var(--hairline) solid var(--border-strong);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-heading);
+}
+.count {
+  margin-left: 0.25em;
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  vertical-align: middle;
+}
+
+.close {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem; /* 44px touch target */
+  padding-inline: var(--space-3);
+  font-size: var(--text-xs);
+  border: var(--hairline) solid var(--border-strong);
+  border-radius: var(--radius-1);
+}
+.close:hover {
+  border-color: var(--text);
+}
+
+.added {
+  padding: var(--space-3) var(--space-5);
+  border-bottom: var(--hairline) solid var(--border);
+  text-transform: none;
+  letter-spacing: 0.02em;
+  font-size: var(--text-xs);
+}
+.addedKey {
+  margin-right: var(--space-2);
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-mono);
+  font-size: var(--text-2xs);
+}
+
+/* ---- Lines ------------------------------------------------------------------- */
+.body {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.lines {
+  list-style: none;
+}
+
+.line {
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 1fr) auto;
+  column-gap: var(--space-4);
+  row-gap: var(--space-3);
+  padding: var(--space-5);
+  border-bottom: var(--hairline) solid var(--border);
+}
+
+.thumb {
+  width: 4rem;
+  aspect-ratio: 1 / 1;
+  border: var(--hairline) solid var(--border);
+}
+
+.name {
+  font-family: var(--font-display);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-heading);
+}
+.model {
+  color: var(--text-muted);
+}
+.variant {
+  margin-top: var(--space-1);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+.each {
+  margin-top: var(--space-1);
+  color: var(--text-faint);
+}
+
+.total {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+
+/* Stepper and Remove share the row under the line, aligned with its text */
+.controls {
+  grid-column: 2 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.stepper {
+  display: inline-flex;
+  align-items: stretch;
+  border: var(--hairline) solid var(--border-strong);
+  border-radius: var(--radius-1);
+}
+.step {
+  width: 2.75rem;
+  height: 2.75rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-md);
+  line-height: 1;
+}
+/* Real pointers only: on touch the shade would stick to the last button tapped */
+@media (hover: hover) {
+  .step:hover:not([aria-disabled="true"]) {
+    background: var(--surface-strong);
+  }
+}
+/* Kept focusable at the limit (see BagDrawer.tsx); only the look says "no" */
+.step[aria-disabled="true"] {
+  color: var(--text-faint);
+  cursor: default;
+}
+.qty {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.25rem;
+  font-size: var(--text-sm);
+  letter-spacing: 0;
+  border-inline: var(--hairline) solid var(--border);
+}
+
+.remove {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  color: var(--text-muted);
+}
+.remove:hover {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* ---- Foot: subtotal, disabled checkout, the note ----------------------------- */
+.foot {
+  padding: var(--space-4) var(--space-5) var(--space-5);
+  border-top: var(--hairline) solid var(--border-strong);
+}
+
+.subtotal {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.subtotal .mono {
+  color: var(--text-faint);
+}
+.subtotalValue {
+  font-family: var(--font-mono);
+  font-size: var(--text-md);
+}
+
+/* Disabled: outlined, not ink. Text stays legible (4.5:1+) so the reason is read */
+.checkout {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.25rem;
+  margin-top: var(--space-4);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--text-faint);
+  border: var(--hairline) dashed var(--border-strong);
+  border-radius: var(--radius-1);
+  cursor: not-allowed;
+}
+
+.note {
+  margin-top: var(--space-3);
+  color: var(--text-faint);
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+
+/* ---- Empty ------------------------------------------------------------------- */
+.empty {
+  padding: var(--space-7) var(--space-5);
+}
+.emptyCode {
+  color: var(--text-faint);
+}
+.emptyTitle {
+  margin-top: var(--space-3);
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-heading);
+}
+.emptyBody {
+  margin-top: var(--space-2);
+  color: var(--text-muted);
+}
+
+.refs {
+  margin-top: var(--space-5);
+  list-style: none;
+  border-top: var(--hairline) solid var(--border-strong);
+}
+.refs li {
+  border-bottom: var(--hairline) solid var(--border);
+}
+.ref {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr auto;
+  gap: var(--space-3);
+  align-items: baseline;
+  min-height: 2.75rem;
+  padding: var(--space-3) 0;
+}
+.ref .mono {
+  color: var(--text-faint);
+}
+.ref:hover .mono:first-child {
+  color: var(--text);
+}
+.refPrice {
+  letter-spacing: 0;
+}
+
+/* ---- Phone ------------------------------------------------------------------- */
+@media (max-width: 860px) {
+  .head,
+  .added,
+  .line,
+  .foot {
+    padding-inline: var(--gutter);
+  }
+  .empty {
+    padding-inline: var(--gutter);
+  }
+}

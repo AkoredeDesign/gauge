@@ -1,0 +1,488 @@
+.product {
+  padding-top: calc(var(--header-h) + var(--space-5));
+  padding-bottom: var(--space-9);
+  background: var(--bg);
+}
+
+/* ---- Top: breadcrumb, gallery, buy panel ------------------------------------- */
+.top {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--space-5);
+  align-items: start;
+}
+
+.crumbs {
+  grid-column: 1 / -1;
+  margin-bottom: var(--space-5);
+  color: var(--text-muted);
+}
+.crumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  list-style: none;
+}
+.crumbs li + li::before {
+  content: "/";
+  margin-right: var(--space-2);
+  color: var(--text-faint);
+}
+.crumbs a {
+  border-bottom: var(--hairline) solid var(--border-strong);
+}
+.crumbs a:hover {
+  color: var(--text);
+  border-color: var(--text);
+}
+.crumbs [aria-current] {
+  color: var(--text);
+}
+
+/* Desktop: the front-on shot full width, then pairs of like orientation (see spans()).
+   Each frame takes the photograph's own ratio (Shot). */
+.gallery {
+  grid-column: 1 / span 7;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+  list-style: none;
+}
+.shot[data-span="full"] {
+  grid-column: 1 / -1;
+}
+
+/* Variant shots share one cell */
+.stack {
+  display: grid;
+}
+.stack > * {
+  grid-area: 1 / 1;
+}
+
+/* Sticky so the buy panel stays beside the gallery as it scrolls */
+.panel {
+  grid-column: 8 / -1;
+  align-self: stretch;
+}
+.buy {
+  position: sticky;
+  top: calc(var(--header-h) + var(--space-5));
+  background: var(--surface-raised);
+  border: var(--hairline) solid var(--border-strong);
+}
+
+.sheetHead {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: var(--hairline) solid var(--border);
+  color: var(--text-faint);
+}
+
+.buyBody {
+  padding: var(--space-5) var(--space-5) var(--space-5);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-heading);
+}
+.name {
+  color: var(--text-muted);
+}
+
+.price {
+  margin-top: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-md);
+}
+
+.description {
+  margin-top: var(--space-4);
+  max-width: 46ch;
+  color: var(--text-muted);
+}
+
+/* ---- Model switcher: two option cells, like a parts-list choice ---------- */
+.switcher {
+  margin-top: var(--space-5);
+  border: 0;
+}
+.switcher legend {
+  margin-bottom: var(--space-3);
+  color: var(--text-faint);
+}
+.legendValue {
+  color: var(--text);
+}
+
+.options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 3rem;
+  padding: var(--space-2) var(--space-3);
+  border: var(--hairline) solid var(--border-strong);
+  cursor: pointer;
+}
+.option:hover {
+  border-color: var(--text);
+}
+/* Selected: a 2px rule, drawn inside so the cell doesn't shift */
+.option:has(.radio:checked) {
+  border-color: var(--text);
+  box-shadow: inset 0 0 0 1px var(--text);
+}
+.option:has(.radio:focus-visible) {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+/* The native radio stays in the tab order and the accessibility tree */
+.radio {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.optionCode {
+  color: var(--text-faint);
+}
+.option:has(.radio:checked) .optionCode {
+  color: var(--text);
+}
+.optionLabel {
+  font-size: var(--text-sm);
+}
+
+/* ---- Add to bag: the page's primary action, in ink ------------------------ */
+.add {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 3.25rem;
+  margin-top: var(--space-5);
+  padding: 0 var(--space-5);
+  background: var(--surface-inverse);
+  color: var(--text-inverse);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  border-radius: var(--radius-1);
+  transition: background var(--dur-fast) var(--ease-out);
+}
+.add:hover {
+  background: var(--surface-inverse-hover);
+}
+
+.fine {
+  margin-top: var(--space-3);
+  color: var(--text-faint);
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+
+.assurances {
+  list-style: none;
+  border-top: var(--hairline) solid var(--border);
+}
+.assurances li {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr;
+  gap: var(--space-3);
+  align-items: baseline;
+  padding: var(--space-3) var(--space-5);
+  font-size: var(--text-sm);
+}
+.assurances li + li {
+  border-top: var(--hairline) solid var(--border);
+}
+.assurances .mono {
+  color: var(--text-faint);
+}
+.inline {
+  justify-self: start;
+  border-bottom: var(--hairline) solid var(--text);
+}
+
+/* ---- Spec sheet ------------------------------------------------------------------ */
+.specs {
+  margin-top: var(--space-9);
+}
+
+.specHead {
+  margin-bottom: var(--space-6);
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--text-muted);
+}
+.rule {
+  flex: 0 0 var(--space-7);
+  height: 1px;
+  background: var(--border-strong);
+}
+
+.specTitle {
+  margin-top: var(--space-4);
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-heading);
+}
+
+/* The drawing: one bordered sheet, groups in hairline cells, title block below */
+.drawing {
+  background: var(--surface-raised);
+  border: var(--hairline) solid var(--border-strong);
+}
+
+.groups {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.group {
+  position: relative; /* Sheet check: the line runs inside each group */
+  border-left: var(--hairline) solid var(--border);
+}
+.group:nth-child(3n + 1) {
+  border-left: 0;
+}
+.group:nth-child(n + 4) {
+  border-top: var(--hairline) solid var(--border);
+}
+/* Case is the long group: it runs the full height of the first column */
+.group:first-child {
+  grid-row: span 2;
+}
+.group:nth-child(4) {
+  border-left: var(--hairline) solid var(--border);
+}
+.group:nth-child(5) {
+  border-top: var(--hairline) solid var(--border);
+}
+
+.groupTitle {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: var(--hairline) solid var(--border);
+  font-weight: var(--weight-regular);
+  color: var(--text);
+}
+.groupIndex {
+  color: var(--text-faint);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(7rem, 2fr) 3fr;
+  gap: var(--space-3);
+  align-items: baseline;
+  padding: var(--space-2) var(--space-4);
+}
+.row + .row {
+  border-top: var(--hairline) dashed var(--border);
+}
+.row dt {
+  color: var(--text-faint);
+}
+.row dd {
+  position: relative;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+
+/* Sheet check: counting digits drawn over the real (hidden) value. On the block dd,
+   not the inline value, so they sit on the value's first line however it wraps */
+.roll {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.roll:empty {
+  display: none;
+}
+
+/* Sheet check: the checker's line, 2px ink (= header index marker), centred on a
+   row's bottom rule; placed by transform, hidden outside the run */
+.check {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  margin-top: -1px;
+  background: var(--text);
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Inline, not inline-block: an inline-block's baseline is its last line, which
+   would drop the key to the bottom of a wrapped value */
+.value {
+  position: relative;
+}
+/* Sign-off under the tolerance (= Range sheets, hero spec strip) */
+.tick {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 1px;
+  background: var(--text);
+}
+
+.titleBlock {
+  display: grid;
+  grid-template-columns: 1fr 2fr repeat(4, 1fr);
+  border-top: var(--hairline) solid var(--border-strong);
+}
+.titleBlock > div {
+  padding: var(--space-3) var(--space-4);
+}
+.titleBlock > div + div {
+  border-left: var(--hairline) solid var(--border);
+}
+.titleBlock dt {
+  color: var(--text-faint);
+}
+.titleBlock dd {
+  margin-top: var(--space-1);
+  color: var(--text);
+}
+.tbMark {
+  display: flex;
+  align-items: center;
+}
+.tbMark dd {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-heading);
+  text-transform: none;
+}
+
+/* ---- Responsive ---------------------------------------------------------- */
+@media (max-width: 1100px) {
+  .gallery { grid-column: 1 / span 6; }
+  .panel { grid-column: 7 / -1; }
+
+  .groups { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .group,
+  .group:nth-child(n) {
+    grid-row: auto;
+    border-left: 0;
+    border-top: var(--hairline) solid var(--border);
+  }
+  .group:nth-child(-n + 2) { border-top: 0; }
+  .group:nth-child(even) { border-left: var(--hairline) solid var(--border); }
+  .group:last-child { grid-column: 1 / -1; }
+
+  .titleBlock { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .titleBlock > div:nth-child(n) { border-left: var(--hairline) solid var(--border); }
+  .titleBlock > div:nth-child(3n + 1) { border-left: 0; }
+  .titleBlock > div:nth-child(n + 4) { border-top: var(--hairline) solid var(--border); }
+}
+
+@media (max-width: 860px) {
+  .product {
+    padding-top: calc(var(--header-h) + var(--space-4));
+    padding-bottom: var(--space-8);
+  }
+
+  .top {
+    display: block;
+  }
+  .crumbs {
+    margin-bottom: var(--space-4);
+  }
+
+  /* Swipe strip: each shot most of the width, the next one peeking in */
+  .gallery {
+    display: flex;
+    gap: var(--space-2);
+    margin-inline: calc(-1 * var(--gutter));
+    padding-inline: var(--gutter);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+  .gallery::-webkit-scrollbar {
+    display: none;
+  }
+  .shot,
+  .shot[data-shot] {
+    flex: 0 0 86%;
+    scroll-snap-align: start;
+  }
+  /* One frame size along the strip; landscape shots crop to it */
+  .image {
+    aspect-ratio: 4 / 5;
+  }
+
+  .panel {
+    margin-top: var(--space-5);
+  }
+  .buy {
+    position: static;
+  }
+  .buyBody {
+    padding: var(--space-5) var(--space-4);
+  }
+  .assurances li {
+    padding-inline: var(--space-4);
+  }
+
+  .specs {
+    margin-top: var(--space-8);
+  }
+  .groups {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .group:nth-child(n) {
+    grid-column: auto;
+    border-left: 0;
+    border-top: var(--hairline) solid var(--border);
+  }
+  .group:first-child {
+    border-top: 0;
+  }
+
+  .titleBlock {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .titleBlock > div:nth-child(n) {
+    border-left: 0;
+    border-top: var(--hairline) solid var(--border);
+  }
+  .titleBlock > div:nth-child(-n + 2) {
+    border-top: 0;
+  }
+  .titleBlock > div:nth-child(even) {
+    border-left: var(--hairline) solid var(--border);
+  }
+}

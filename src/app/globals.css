@@ -1,0 +1,119 @@
+@import "../styles/tokens.css";
+
+/* ---- Reset --------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  color-scheme: light;
+  /* The scrollbar's space is kept even while .scroll-locked hides it, so opening the
+     bag or the phone menu doesn't widen the page and jump it sideways (classic
+     scrollbars, e.g. Windows). Always on, not only while locked: vw units follow
+     the gutter, and the --gutter clamp is in vw. Overlay scrollbars are unaffected. */
+  scrollbar-gutter: stable;
+}
+
+body {
+  min-height: 100svh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* In-page targets (/#calibration, /#service) land below the fixed header */
+section[id] {
+  scroll-margin-top: var(--header-h);
+}
+/* Phone: jumps to these two land lower, eating most of the section's top padding
+   (space-8 in Calibration/Service.module.css) so more of the chart is on screen,
+   with the eyebrow still a space-3 gap below the header. scroll-margin only affects
+   hash scrolls (link jumps, a fresh visit to /#id); reload and back/forward restore
+   the saved position instead. */
+@media (max-width: 860px) {
+  #calibration,
+  #service {
+    scroll-margin-top: calc(var(--header-h) - var(--space-8) + var(--space-3));
+  }
+}
+
+/* Set by src/lib/scrollLock.ts while any overlay holds the lock */
+.scroll-locked {
+  overflow: hidden;
+}
+/* The kept gutter (see html) is blank while locked, and fixed layers can't paint
+   into it: the bag's panel and backdrop stop at its edge. Only the canvas shows
+   there, so while the bag is open it takes the panel's paper and the panel still
+   reads as reaching the window edge. (The phone menu's paper is the page's own.) */
+html:has(dialog#bag[open]) {
+  background-color: var(--surface-raised);
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: var(--surface-inverse);
+  color: var(--text-inverse);
+}
+
+/* ---- Utilities ----------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

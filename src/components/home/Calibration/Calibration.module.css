@@ -1,0 +1,347 @@
+.calibration {
+  padding-block: var(--space-9);
+  background: var(--bg);
+}
+
+/* ---- Section head (same structure as Range) -------------------------------- */
+.head {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--space-5);
+  align-items: end;
+}
+
+.heading {
+  grid-column: 1 / span 7;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--text-muted);
+}
+
+.rule {
+  flex: 0 0 var(--space-7);
+  height: 1px;
+  background: var(--border-strong);
+}
+
+.title {
+  margin-top: var(--space-5);
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-display);
+}
+
+.intro {
+  grid-column: 9 / span 4;
+  color: var(--text-muted);
+}
+
+
+/* ---- Body: bench photo + record ------------------------------------------- */
+.body {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--space-5);
+  margin-top: var(--space-8);
+}
+
+/* Desktop: as tall as the record beside it, the photograph cropped to fit */
+.image {
+  grid-column: 1 / span 5;
+  min-height: 100%;
+  aspect-ratio: auto;
+}
+
+.record {
+  position: relative;
+  grid-column: 6 / span 7;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-raised);
+  border: var(--hairline) solid var(--border-strong);
+}
+
+.recordHead {
+  border-bottom: var(--hairline) solid var(--border-strong);
+}
+
+.recordMeta {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: var(--hairline) solid var(--border);
+  color: var(--text-faint);
+}
+
+.recordTitle {
+  padding: var(--space-5) var(--space-4) var(--space-4);
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-heading);
+  line-height: var(--leading-snug);
+}
+
+.serial {
+  color: var(--text-muted);
+}
+
+/* ---- Readings table + deviation plot ---------------------------------------- */
+/* Fixed layout: the header row sets the text columns, the plot takes the rest
+   (auto layout collapses it — it has no text to size from) */
+.table {
+  flex: 1;
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.table th,
+.table td {
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  font-weight: var(--weight-regular);
+}
+
+.table thead th {
+  padding-block: var(--space-3);
+  color: var(--text-faint);
+  border-bottom: var(--hairline) solid var(--border);
+}
+
+.table tbody th {
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.pos {
+  width: 9.5rem;
+}
+
+.table tbody tr + tr > * {
+  border-top: var(--hairline) solid var(--border);
+}
+
+.num {
+  width: 5.5rem;
+  text-align: right !important;
+  white-space: nowrap;
+}
+
+.unit {
+  text-transform: none;
+}
+
+/* Plot column: positions are % of the inset track, −4 … +4 s/day */
+.plotHead,
+.plot {
+  position: relative;
+  padding: 0 !important;
+}
+
+.track {
+  position: absolute;
+  inset: 0 var(--space-5);
+}
+
+.tickLabel {
+  position: absolute;
+  top: 50%;
+  translate: -50% -50%;
+}
+
+/* Tolerance band ±2 (25–75%) with dashed limits, plus the zero line.
+   Rows abut, so the band reads as one continuous strip down the record. */
+.plot .track::before {
+  content: "";
+  position: absolute;
+  /* --band 0 → 1: the limit edges step out from zero to ±2 (Five-position run) */
+  inset: 0 calc(50% - 25% * var(--band, 1));
+  background: var(--band-fill, var(--chart-band));
+  border-inline: var(--hairline) dashed var(--band-edge, var(--border-strong));
+}
+.plot .track::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  background: var(--border-strong);
+}
+
+.leader {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  height: 1px;
+  background: var(--text);
+}
+
+/* The reading: 8px, ringed in the band colour so it lifts off the limit lines */
+.dot {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  width: 8px;
+  height: 8px;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: var(--text);
+  box-shadow: 0 0 0 2px var(--chart-band);
+}
+
+/* ---- Five-position run (motion: FivePositionRun.tsx) ------------------------ */
+/* Row cursor on the record's left rule: header marker weight, turned upright.
+   Placed and sized per row by JS; only visible while the run is on. */
+.cursor {
+  position: absolute;
+  top: 0;
+  left: calc(-1 * var(--hairline));
+  z-index: 2;
+  width: 2px;
+  background: var(--text);
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Rolling digits are drawn over the real value while it is held transparent */
+.reading {
+  position: relative;
+  display: inline-block;
+}
+.roll {
+  position: absolute;
+  inset: 0;
+  white-space: nowrap;
+}
+.roll:empty {
+  display: none;
+}
+
+/* ---- Summary: 4 title-block cells ----------------------------------------- */
+.summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: var(--hairline) solid var(--border-strong);
+}
+
+.cell {
+  padding: var(--space-3) var(--space-4) var(--space-4);
+}
+.cell + .cell {
+  border-left: var(--hairline) solid var(--border);
+}
+
+.cell dt {
+  color: var(--text-faint);
+}
+
+.cell dd {
+  margin-top: var(--space-1);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+
+.value {
+  position: relative;
+  display: inline-block;
+}
+
+/* Sign-off: hairline under the result (= hero and Range ticks) */
+.tick {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 1px;
+  background: var(--text);
+}
+
+/* ---- Responsive ---------------------------------------------------------- */
+@media (max-width: 1100px) {
+  .intro { grid-column: 8 / span 5; }
+  .image { grid-column: 1 / span 4; }
+  .record { grid-column: 5 / span 8; }
+  .pos { width: 8rem; }
+}
+
+@media (max-width: 860px) {
+  .calibration {
+    padding-block: var(--space-8);
+  }
+
+  .head {
+    row-gap: var(--space-5);
+  }
+  .heading,
+  .intro {
+    grid-column: 1 / -1;
+  }
+
+  .body {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: var(--space-5);
+    margin-top: var(--space-7);
+  }
+  .image,
+  .record {
+    grid-column: 1 / -1;
+  }
+  .image {
+    min-height: 0;
+    aspect-ratio: 5 / 4;
+  }
+
+  /* Tighter cells so four columns fit 343px */
+  .table th,
+  .table td {
+    padding-inline: var(--space-3);
+  }
+  .pos { width: 6.75rem; }
+  .num { width: 3.75rem; }
+  /* No room for header units; the summary and caption carry s/day */
+  .unit { display: none; }
+  .track { inset: 0 var(--space-3); }
+
+  .summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .cell:nth-child(3) {
+    border-left: 0;
+  }
+  .cell:nth-child(n + 3) {
+    border-top: var(--hairline) solid var(--border);
+  }
+}
+
+/* Before state from the first paint on a fresh /#calibration load (prerunScript.ts).
+   The same values FivePositionRun's arm() sets inline, which take over on mount and
+   remove the marker; without the marker the record renders finished. */
+:global(:root[data-prerun="calibration"]) .table {
+  --band: 0;
+  --band-edge: transparent;
+  --band-fill: transparent;
+}
+:global(:root[data-prerun="calibration"]) .table [data-fp="dot"],
+:global(:root[data-prerun="calibration"]) .table [data-fp="leader"] {
+  visibility: hidden;
+}
+:global(:root[data-prerun="calibration"]) .record [data-fp="val"],
+:global(:root[data-prerun="calibration"]) .record [data-fp="limit"],
+:global(:root[data-prerun="calibration"]) .record [data-fp="result"] {
+  opacity: 0;
+}
+:global(:root[data-prerun="calibration"]) .record [data-fp="tick"] {
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}

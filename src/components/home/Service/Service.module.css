@@ -1,0 +1,579 @@
+.service {
+  padding-block: var(--space-9);
+  background: var(--bg);
+}
+
+/* ---- Section head (same structure as Range / Calibration) ------------------ */
+.head {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--space-5);
+  align-items: end;
+}
+
+.heading {
+  grid-column: 1 / span 7;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--text-muted);
+}
+
+.rule {
+  flex: 0 0 var(--space-7);
+  height: 1px;
+  background: var(--border-strong);
+}
+
+.title {
+  margin-top: var(--space-5);
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-display);
+}
+
+.intro {
+  grid-column: 9 / span 4;
+  color: var(--text-muted);
+}
+
+
+/* ---- Body: service record + work order ------------------------------------- */
+.body {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--space-5);
+  margin-top: var(--space-8);
+}
+
+.record {
+  grid-column: 1 / span 8;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-raised);
+  border: var(--hairline) solid var(--border-strong);
+}
+
+.recordHead {
+  border-bottom: var(--hairline) solid var(--border-strong);
+}
+
+.recordMeta {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: var(--hairline) solid var(--border);
+  color: var(--text-faint);
+}
+
+.recordTitleRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3) var(--space-5);
+  padding: var(--space-5) var(--space-4) var(--space-4);
+}
+
+.recordTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-heading);
+  line-height: var(--leading-snug);
+}
+
+.serial {
+  color: var(--text-muted);
+}
+
+/* Legend keys draw the same marks as the plot */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  list-style: none;
+  color: var(--text-faint);
+}
+.legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.keyDot,
+.keyRing {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.keyDot {
+  background: var(--text);
+}
+.keyRing {
+  border: var(--hairline) solid var(--text);
+  background: var(--surface-raised);
+}
+.keyService {
+  width: 0;
+  height: 12px;
+  border-left: var(--hairline) solid var(--text);
+}
+
+/* ---- Drift plot -------------------------------------------------------------- */
+.chart {
+  flex: 1;
+  display: flex;
+  padding: var(--space-6) var(--space-5) var(--space-4) var(--space-3);
+}
+
+/* Axes sit outside the area: rate on the left, years below */
+.plot {
+  --y-axis: 2.25rem;
+  --x-axis: 2rem;
+  position: relative;
+  flex: 1;
+  min-height: 16rem;
+}
+
+.area {
+  position: absolute;
+  inset: 0 0 var(--x-axis) var(--y-axis);
+}
+
+.yAxis {
+  position: absolute;
+  top: 0;
+  bottom: var(--x-axis);
+  left: 0;
+  width: var(--y-axis);
+  color: var(--text-faint);
+}
+.yAxis span {
+  position: absolute;
+  right: var(--space-3);
+  translate: 0 -50%;
+}
+
+.xAxis {
+  position: absolute;
+  left: var(--y-axis);
+  right: 0;
+  bottom: 0;
+  height: var(--x-axis);
+  color: var(--text-faint);
+}
+/* The year rule: its own element so Drift and reset can scribe it */
+.axisRule {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--border-strong);
+}
+.year {
+  position: absolute;
+  top: var(--space-3);
+  translate: -50% 0;
+}
+
+/* Tolerance band, as on the calibration record */
+.band {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background: var(--chart-band);
+  border-block: var(--hairline) dashed var(--border-strong);
+}
+
+.zero {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--border-strong);
+}
+
+.yearLine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--grid-minor);
+}
+
+/* Full service: a solid ink rule, top to axis */
+.serviceLine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--text);
+}
+
+/* Scheduled years: the paper shows through the band, hatched lightly */
+.future {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background: repeating-linear-gradient(
+    135deg,
+    var(--grid-major) 0 1px,
+    transparent 1px 6px
+  );
+}
+
+.today {
+  position: absolute;
+  top: calc(-1 * var(--space-5));
+  bottom: 0;
+  width: 0;
+  border-left: var(--hairline) dashed var(--text-muted);
+}
+.todayLabel {
+  position: absolute;
+  top: 0;
+  left: var(--space-2);
+  translate: 0 -25%;
+  color: var(--text-muted);
+}
+
+.line {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.line line {
+  fill: none;
+  stroke: var(--text);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+
+/* Reading: 8px, ringed in the paper so it lifts off grid and band lines */
+.dot {
+  position: absolute;
+  z-index: 1;
+  width: 8px;
+  height: 8px;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: var(--text);
+  box-shadow: 0 0 0 2px var(--surface-raised);
+}
+
+.dotLabel {
+  position: absolute;
+  left: 50%;
+  translate: -50% 0;
+  padding: 0 2px;
+  white-space: nowrap;
+  color: var(--text);
+  background: var(--surface-raised);
+}
+.dotLabel[data-side="above"] {
+  bottom: calc(100% + var(--space-2));
+}
+/* Right of the dot, clear of the full-service line */
+.dotLabel[data-side="right"] {
+  top: 50%;
+  left: calc(100% + var(--space-2));
+  translate: 0 -50%;
+}
+
+/* Scheduled check: hollow ring sitting on the year rule */
+.ring {
+  position: absolute;
+  top: 0;
+  width: 8px;
+  height: 8px;
+  translate: -50% -50%;
+  border-radius: 50%;
+  border: var(--hairline) solid var(--text);
+  background: var(--surface-raised);
+}
+
+/* ---- Drift and reset (motion: DriftAndReset.tsx) ------------------------------ */
+/* The pen: drawn exactly like the Today line, which it becomes at the end of the
+   run. Placed per year by JS; only visible while the run is on. */
+.cursor {
+  position: absolute;
+  top: calc(-1 * var(--space-5));
+  bottom: 0;
+  left: 0;
+  z-index: 0; /* under the dots (1), so labels sit over it like the static rules */
+  width: 0;
+  border-left: var(--hairline) dashed var(--text-muted);
+  visibility: hidden;
+  pointer-events: none;
+}
+/* Reading at the pen, in the Today label's slot */
+.readout {
+  position: absolute;
+  top: 0;
+  left: var(--space-2);
+  translate: 0 -25%;
+  white-space: nowrap;
+  color: var(--text);
+}
+
+/* Counting digits are drawn over the real value while it is held transparent */
+.reading {
+  position: relative;
+  display: inline-block;
+}
+.roll {
+  position: absolute;
+  inset: 0;
+  white-space: nowrap;
+}
+.roll:empty {
+  display: none;
+}
+
+/* ---- Summary: 4 title-block cells ----------------------------------------- */
+.summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: var(--hairline) solid var(--border-strong);
+}
+
+.cell {
+  padding: var(--space-3) var(--space-4) var(--space-4);
+}
+.cell + .cell {
+  border-left: var(--hairline) solid var(--border);
+}
+
+.cell dt {
+  color: var(--text-faint);
+}
+
+.cell dd {
+  margin-top: var(--space-1);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+
+.value {
+  position: relative;
+  display: inline-block;
+}
+
+/* Sign-off: hairline under the next date (= hero, Range, Calibration ticks) */
+.tick {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 1px;
+  background: var(--text);
+}
+
+/* ---- Work order --------------------------------------------------------------- */
+.order {
+  grid-column: 9 / span 4;
+  display: flex;
+  flex-direction: column;
+  border-top: var(--hairline) solid var(--border-strong);
+}
+
+.orderHead {
+  display: flex;
+  justify-content: space-between;
+  padding-block: var(--space-3);
+  color: var(--text-faint);
+}
+
+.procedures {
+  flex: 1;
+  list-style: none;
+}
+
+.procedure {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  padding-block: var(--space-4);
+  border-top: var(--hairline) solid var(--border);
+}
+
+.index {
+  padding-top: 0.3em;
+  color: var(--text-faint);
+}
+
+.procTop {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.procName {
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-heading);
+  line-height: var(--leading-snug);
+}
+
+.price {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  white-space: nowrap;
+}
+
+.interval {
+  margin-top: var(--space-1);
+  color: var(--text-muted);
+}
+
+.procLine {
+  margin-top: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+/* Outline button (= hero secondary): the hero keeps the page's one orange CTA */
+.cta {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.25rem;
+  margin-top: var(--space-4);
+  padding: 0 var(--space-6);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  border: var(--hairline) solid var(--text);
+  border-radius: var(--radius-1);
+  transition:
+    background var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+.cta:hover {
+  background: var(--surface-inverse);
+  color: var(--text-inverse);
+}
+
+/* Replaces the button once pressed (= newsletter card's confirmation) */
+.confirm {
+  display: flex;
+  align-items: center;
+  min-height: 3.25rem;
+  margin-top: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border: var(--hairline) solid var(--border-strong);
+  color: var(--text);
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+
+/* ---- Responsive ---------------------------------------------------------- */
+@media (max-width: 1100px) {
+  .intro { grid-column: 8 / span 5; }
+  .record { grid-column: 1 / -1; }
+  /* Work order goes full width under the record, procedures in two columns */
+  .order {
+    grid-column: 1 / -1;
+    margin-top: var(--space-7);
+  }
+  .procedures {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-5);
+  }
+  .cta,
+  .confirm {
+    align-self: flex-start;
+    width: auto;
+  }
+}
+
+@media (max-width: 860px) {
+  .service {
+    padding-block: var(--space-8);
+  }
+
+  .head {
+    row-gap: var(--space-5);
+  }
+  .heading,
+  .intro {
+    grid-column: 1 / -1;
+  }
+
+  .body {
+    margin-top: var(--space-7);
+  }
+
+  .recordMeta {
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .chart {
+    padding: var(--space-6) var(--space-3) var(--space-3) 0;
+  }
+  .plot {
+    --y-axis: 2rem;
+    min-height: 13rem;
+  }
+
+  .summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .cell:nth-child(3) {
+    border-left: 0;
+  }
+  .cell:nth-child(n + 3) {
+    border-top: var(--hairline) solid var(--border);
+  }
+
+  .procedures {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cta,
+  .confirm {
+    align-self: stretch;
+    width: 100%;
+  }
+}
+
+/* Before state from the first paint on a fresh /#service load (prerunScript.ts).
+   The same values DriftAndReset's arm() sets inline, which take over on mount and
+   remove the marker; without the marker the chart renders finished. */
+:global(:root[data-prerun="service"]) .chart [data-dr="axis"] {
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}
+:global(:root[data-prerun="service"]) .chart [data-dr="service"] {
+  transform: scaleY(0);
+  transform-origin: 50% 0;
+}
+:global(:root[data-prerun="service"]) .chart [data-dr="dot"],
+:global(:root[data-prerun="service"]) .chart [data-dr="ring"],
+:global(:root[data-prerun="service"]) .chart [data-dr="future"],
+:global(:root[data-prerun="service"]) .chart [data-dr="today"],
+:global(:root[data-prerun="service"]) .chart [data-dr="seg"] {
+  visibility: hidden;
+}
+:global(:root[data-prerun="service"]) .chart [data-dr="year"],
+:global(:root[data-prerun="service"]) .chart [data-dr="label"],
+:global(:root[data-prerun="service"]) .record [data-dr="val"] {
+  opacity: 0;
+}
+:global(:root[data-prerun="service"]) .record [data-dr="tick"] {
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}

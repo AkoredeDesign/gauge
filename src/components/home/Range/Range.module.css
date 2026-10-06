@@ -1,0 +1,272 @@
+.range {
+  padding-block: var(--space-9) var(--space-8);
+  background: var(--bg);
+}
+
+/* ---- Section head ---------------------------------------------------------- */
+.head {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--space-5);
+  align-items: end;
+}
+
+.heading {
+  grid-column: 1 / span 7;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--text-muted);
+}
+
+.rule {
+  flex: 0 0 var(--space-7);
+  height: 1px;
+  background: var(--border-strong);
+}
+
+.title {
+  margin-top: var(--space-5);
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-display);
+}
+
+.intro {
+  grid-column: 9 / span 4;
+  color: var(--text-muted);
+}
+
+.all {
+  display: inline-flex;
+  gap: var(--space-2);
+  margin-top: var(--space-5);
+  padding-bottom: var(--space-1);
+  color: var(--text);
+  border-bottom: var(--hairline) solid var(--text);
+}
+
+/* ---- Sheets ------------------------------------------------------------------ */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-5);
+  margin-top: var(--space-8);
+  list-style: none;
+}
+
+.sheet {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-raised);
+  border: var(--hairline) solid var(--border-strong);
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+.sheet:hover,
+.sheet:focus-within {
+  border-color: var(--text);
+}
+
+.sheetHead {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: var(--hairline) solid var(--border);
+  color: var(--text-faint);
+}
+
+/* Ratio from the photograph itself (Shot) */
+.image {
+  border-bottom: var(--hairline) solid var(--border);
+}
+
+.body {
+  flex: 1;
+  padding: var(--space-5) var(--space-4) var(--space-4);
+}
+
+.name {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-heading);
+  line-height: var(--leading-snug);
+}
+
+.model {
+  color: var(--text-muted);
+}
+
+/* Stretch the link over the whole sheet */
+.link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+.link:focus-visible {
+  outline: none;
+}
+.link:focus-visible::after {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.line {
+  margin-top: var(--space-2);
+  max-width: 38ch;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+/* Title block: 2 × 2 hairline cells */
+.block {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: var(--hairline) solid var(--border);
+}
+
+.cell {
+  padding: var(--space-3) var(--space-4);
+}
+.cell:nth-child(even) {
+  border-left: var(--hairline) solid var(--border);
+}
+.cell:nth-child(n + 3) {
+  border-top: var(--hairline) solid var(--border);
+}
+
+.cell dt {
+  color: var(--text-faint);
+}
+
+.cell dd {
+  margin-top: var(--space-1);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+
+.value {
+  position: relative;
+  display: inline-block;
+}
+
+/* Sign-off: hairline under the tolerance value (= hero spec strip) */
+.tick {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 1px;
+  background: var(--text);
+}
+
+.foot {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: var(--space-4);
+  border-top: var(--hairline) solid var(--border-strong);
+}
+
+.price {
+  font-family: var(--font-mono);
+  font-size: var(--text-md);
+}
+
+.view {
+  color: var(--text-muted);
+}
+.sheet:hover .view,
+.sheet:focus-within .view {
+  color: var(--text);
+}
+
+/* One hard step, no transition */
+.arrow {
+  display: inline-block;
+}
+.sheet:hover .arrow,
+.sheet:focus-within .arrow {
+  translate: 4px 0;
+}
+
+/* Hover marker: sits on the sheet's bottom rule; Inspection.tsx moves it */
+.marker {
+  position: absolute;
+  left: 0;
+  bottom: calc(-1 * var(--hairline));
+  z-index: 1;
+  width: 100px; /* = BASE_W in Inspection.tsx */
+  height: 2px;
+  background: var(--text);
+  transform-origin: 0 50%;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* ---- Inspection probe ------------------------------------------------------ */
+.inspect {
+  position: relative;
+}
+
+/* Positioned and sized per pass by Inspection.tsx; only visible while one runs */
+.probe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 1px;
+  background: var(--text);
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.readout {
+  position: absolute;
+  left: 0;
+  bottom: 100%;
+  margin-bottom: var(--space-1);
+  padding: 2px var(--space-1);
+  white-space: nowrap;
+  color: var(--text-faint);
+  /* Paper backing: when it holds under the header it can sit over a sheet */
+  background: var(--bg);
+}
+
+/* ---- Responsive ---------------------------------------------------------- */
+@media (max-width: 1100px) {
+  .heading { grid-column: 1 / span 7; }
+  .intro { grid-column: 8 / span 5; }
+}
+
+@media (max-width: 860px) {
+  .range {
+    padding-block: var(--space-8) var(--space-7);
+  }
+
+  .head {
+    row-gap: var(--space-5);
+  }
+  .heading,
+  .intro {
+    grid-column: 1 / -1;
+  }
+
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-6);
+    margin-top: var(--space-7);
+  }
+
+  /* Shorter crop on phones so three sheets don't run to 2,000px */
+  .image {
+    aspect-ratio: 5 / 4;
+  }
+}

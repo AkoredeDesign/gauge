@@ -1,0 +1,54 @@
+/* :where() keeps this at zero specificity, so a caller's class can set a deliberate crop */
+:where(.frame) {
+  aspect-ratio: var(--ratio);
+}
+
+.frame {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  /* Holds the frame's tone until the photograph arrives */
+  background-color: var(--photo-light);
+}
+.frame[data-tone="dark"] {
+  background-color: var(--photo-dark);
+}
+
+/* Stacked variant shots: only the selected one shows */
+.frame[data-shown="false"] {
+  visibility: hidden;
+}
+
+.img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--focus);
+}
+
+@media (max-width: 860px) {
+  /* Natural size is the narrow source's 125vw (see Shot.tsx); object-position crops */
+  .narrowCrop .img {
+    object-fit: none;
+    object-position: var(--narrow-focus);
+  }
+}
+
+/* Registration marks */
+.corner {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: var(--mark-on-light);
+  border-style: solid;
+  border-width: 0;
+}
+.frame[data-tone="dark"] .corner {
+  border-color: var(--mark-on-dark);
+}
+.corner[data-pos="tl"] { top: 10px; left: 10px; border-top-width: 1px; border-left-width: 1px; }
+.corner[data-pos="tr"] { top: 10px; right: 10px; border-top-width: 1px; border-right-width: 1px; }
+.corner[data-pos="bl"] { bottom: 10px; left: 10px; border-bottom-width: 1px; border-left-width: 1px; }
+.corner[data-pos="br"] { bottom: 10px; right: 10px; border-bottom-width: 1px; border-right-width: 1px; }

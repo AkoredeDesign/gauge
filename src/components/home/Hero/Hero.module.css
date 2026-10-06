@@ -1,0 +1,311 @@
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100svh;
+  /* Reserve space for the (not yet built) fixed header */
+  padding-top: calc(var(--header-h) + var(--space-6));
+  padding-bottom: var(--space-8);
+  overflow: hidden;
+  isolation: isolate;
+  background-color: var(--bg);
+}
+
+/* Calibration grid backdrop — minor 20px / major 160px, faded at the edges */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(var(--grid-major) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
+    linear-gradient(var(--grid-minor) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px);
+  background-size:
+    calc(var(--grid-cell) * 4) calc(var(--grid-cell) * 4),
+    calc(var(--grid-cell) * 4) calc(var(--grid-cell) * 4),
+    calc(var(--grid-cell) / 2) calc(var(--grid-cell) / 2),
+    calc(var(--grid-cell) / 2) calc(var(--grid-cell) / 2);
+  mask-image: radial-gradient(ellipse 80% 70% at 60% 45%, #000 30%, transparent 85%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 60% 45%, #000 30%, transparent 85%);
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--space-5);
+  align-items: center;
+}
+
+/* ---- Copy column ---------------------------------------------------------- */
+.content {
+  grid-column: 1 / span 6;
+  position: relative;
+  z-index: var(--z-base);
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--text-muted);
+}
+
+.rule {
+  flex: 0 0 var(--space-7);
+  height: 1px;
+  background: var(--border-strong);
+}
+
+.title {
+  margin-top: var(--space-5);
+  font-family: var(--font-display);
+  font-size: var(--text-display);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-display);
+}
+
+.lede {
+  margin-top: var(--space-6);
+  max-width: 44ch;
+  font-size: var(--text-md);
+  color: var(--text-muted);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-7);
+}
+
+.ctaPrimary,
+.ctaSecondary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 3.25rem;
+  padding: 0 var(--space-6);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  border-radius: var(--radius-1);
+  transition:
+    background var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+/* The one signal-orange element in the hero */
+.ctaPrimary {
+  background: var(--signal);
+  color: var(--signal-ink);
+  font-weight: var(--weight-medium);
+}
+.ctaPrimary:hover {
+  background: var(--signal-hover);
+}
+
+.ctaSecondary {
+  border: var(--hairline) solid var(--text);
+  color: var(--text);
+}
+.ctaSecondary:hover {
+  background: var(--surface-inverse);
+  color: var(--text-inverse);
+}
+
+/* ---- Media column --------------------------------------------------------- */
+.media {
+  grid-column: 8 / span 5;
+  position: relative;
+}
+
+.readout {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
+  color: var(--text-faint);
+}
+
+.image {
+  max-height: 68svh;
+}
+
+.frame {
+  position: relative;
+}
+
+/* Jig registration marks, just outside the image corners */
+.reg {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 0 solid var(--text);
+}
+.reg[data-pos="tl"] { top: -5px; left: -5px; border-top-width: 1px; border-left-width: 1px; }
+.reg[data-pos="tr"] { top: -5px; right: -5px; border-top-width: 1px; border-right-width: 1px; }
+.reg[data-pos="bl"] { bottom: -5px; left: -5px; border-bottom-width: 1px; border-left-width: 1px; }
+.reg[data-pos="br"] { bottom: -5px; right: -5px; border-bottom-width: 1px; border-right-width: 1px; }
+
+/* Newsletter overlays the image, overhanging into the gutter */
+.newsletter {
+  position: absolute;
+  left: calc(var(--space-8) * -1);
+  bottom: var(--space-6);
+  z-index: var(--z-overlay);
+}
+
+/* ---- Spec strip ----------------------------------------------------------- */
+.specs {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin-top: var(--space-8);
+  border-top: var(--hairline) solid var(--border);
+}
+
+.spec {
+  padding: var(--space-4) var(--space-4) 0 0;
+}
+.spec + .spec {
+  padding-left: var(--space-4);
+  border-left: var(--hairline) solid var(--border);
+}
+
+.spec dt {
+  color: var(--text-faint);
+}
+
+.spec dd {
+  margin-top: var(--space-1);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--text);
+}
+
+.value {
+  position: relative;
+  display: inline-block;
+}
+
+/* Sign-off: hairline under the tolerance value */
+.tick {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 1px;
+  background: var(--text);
+}
+
+/* ---- Zero-set pre-paint state ---------------------------------------------
+   Set on <html> by zeroSetScript before first paint; ZeroSet.tsx takes over
+   with matching inline styles. Never set for reduced motion or repeat visits. */
+:global(:root[data-zeroset="pending"]) .rule,
+:global(:root[data-zeroset="pending"]) .tick {
+  transform: scaleX(0);
+}
+:global(:root[data-zeroset="pending"]) .readout > span,
+:global(:root[data-zeroset="pending"]) .reg,
+:global(:root[data-zeroset="pending"]) .value > [data-zs="roll"] {
+  visibility: hidden;
+}
+
+/* ---- Machinist rule along the bottom edge --------------------------------- */
+.ruler {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 16px;
+  background:
+    linear-gradient(90deg, var(--text-faint) 1px, transparent 1px) 0 100% / 80px 16px repeat-x,
+    linear-gradient(90deg, var(--border-strong) 1px, transparent 1px) 0 100% / 40px 10px repeat-x,
+    linear-gradient(90deg, var(--border) 1px, transparent 1px) 0 100% / 8px 5px repeat-x;
+}
+
+/* ---- Responsive ----------------------------------------------------------- */
+@media (max-width: 1100px) {
+  .content { grid-column: 1 / span 7; }
+  .media { grid-column: 8 / span 5; }
+}
+
+/* Tablet: the media column is too narrow for the card to overlay the photograph
+   (it hid the watch and reached the lede), so it tucks under it as on phones,
+   and the photograph gives up some height to keep the hero in one screen */
+@media (min-width: 861px) and (max-width: 1100px) {
+  .image {
+    max-height: 50svh;
+  }
+  .newsletter {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    max-width: none;
+    margin-top: calc(var(--space-8) * -1);
+    margin-inline: var(--space-4);
+    width: auto;
+  }
+}
+
+@media (max-width: 860px) {
+  .hero {
+    justify-content: flex-start;
+    padding-bottom: var(--space-7);
+  }
+
+  .inner {
+    row-gap: var(--space-7);
+  }
+
+  .content,
+  .media {
+    grid-column: 1 / -1;
+  }
+
+  .image {
+    max-height: none;
+  }
+
+  /* Card stops overlaying and tucks under the image, overlapping its base */
+  .newsletter {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    max-width: none;
+    margin-top: calc(var(--space-8) * -1);
+    margin-inline: var(--space-4);
+    width: auto;
+  }
+
+  .specs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: var(--space-7);
+  }
+  .spec,
+  .spec + .spec {
+    padding: var(--space-4) var(--space-3) var(--space-4) 0;
+    border-left: 0;
+    border-bottom: var(--hairline) solid var(--border);
+  }
+  .spec:nth-child(even) {
+    padding-left: var(--space-4);
+    border-left: var(--hairline) solid var(--border);
+  }
+  .spec:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 420px) {
+  .eyebrow { flex-wrap: wrap; row-gap: var(--space-1); }
+  .rule { flex-basis: var(--space-5); }
+  .ctaPrimary,
+  .ctaSecondary {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,432 @@
+.page {
+  padding-top: calc(var(--header-h) + var(--space-8));
+  padding-bottom: var(--space-9);
+  background: var(--bg);
+}
+
+/* ---- Page head (= Range section head) ---------------------------------------- */
+.head {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--space-5);
+  align-items: end;
+}
+
+.heading {
+  grid-column: 1 / span 7;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--text-muted);
+}
+
+.rule {
+  flex: 0 0 var(--space-7);
+  height: 1px;
+  background: var(--border-strong);
+}
+
+.title {
+  margin-top: var(--space-5);
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-display);
+}
+
+.intro {
+  grid-column: 9 / span 4;
+  color: var(--text-muted);
+}
+
+/* 44px tall target; the rule sits under the text, not the box */
+.jump {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 2.75rem;
+  margin-top: var(--space-3);
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-thickness: var(--hairline);
+  text-underline-offset: 5px;
+}
+
+/* ---- Register: one full-width entry per reference ---------------------------- */
+.register {
+  margin-top: var(--space-8);
+  list-style: none;
+}
+
+.entry {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--space-5);
+  padding-block: var(--space-6);
+  border-top: var(--hairline) solid var(--border-strong);
+}
+.entry:last-child {
+  border-bottom: var(--hairline) solid var(--border-strong);
+}
+
+/* Entry number, in the margin like a ledger line */
+.index {
+  grid-column: 1;
+  color: var(--text-faint);
+}
+.indexNum {
+  display: block;
+  font-size: var(--text-lg);
+  letter-spacing: 0;
+  color: var(--text);
+}
+
+.image {
+  grid-column: 2 / span 5;
+  aspect-ratio: 4 / 3;
+}
+
+.body {
+  grid-column: 7 / -1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: auto 1fr;
+  column-gap: var(--space-5);
+  row-gap: var(--space-6);
+}
+
+.text {
+  grid-column: 1;
+}
+
+.name {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-heading);
+}
+
+.ref {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-regular);
+  letter-spacing: var(--tracking-mono);
+  color: var(--text-muted);
+}
+
+.blurb {
+  margin-top: var(--space-3);
+  max-width: 38ch;
+  color: var(--text-muted);
+}
+
+/* Spec list: key / value lines, dashed like the product spec sheet */
+.specs {
+  grid-column: 2;
+  align-self: start;
+  border-top: var(--hairline) solid var(--border);
+}
+.spec {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  gap: var(--space-3);
+  align-items: baseline;
+  padding-block: var(--space-2);
+}
+.spec + .spec {
+  border-top: var(--hairline) dashed var(--border);
+}
+.spec dt {
+  color: var(--text-faint);
+}
+.spec dd {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+
+.value {
+  position: relative;
+}
+/* Sign-off under the tolerance (= Range sheets, product spec sheet) */
+.tick {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 1px;
+  background: var(--text);
+}
+
+.foot {
+  grid-column: 1 / -1;
+  align-self: end;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3) var(--space-5);
+  padding-top: var(--space-4);
+  border-top: var(--hairline) solid var(--border);
+}
+
+.price {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-md);
+}
+.from {
+  color: var(--text-faint);
+}
+
+/* Outline, not ink: Add to bag is the solid ink button, on the product page */
+.view {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 2.75rem;
+  padding: 0 var(--space-5);
+  font-size: var(--text-xs);
+  border: var(--hairline) solid var(--text);
+  border-radius: var(--radius-1);
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.view:hover {
+  background: var(--surface-inverse);
+  color: var(--text-inverse);
+}
+/* One hard step, no transition (= Range) */
+.arrow {
+  display: inline-block;
+}
+.view:hover .arrow,
+.view:focus-visible .arrow {
+  translate: 4px 0;
+}
+
+/* ---- Comparison table -------------------------------------------------------- */
+.compare {
+  margin-top: var(--space-9);
+}
+
+.compareTitle {
+  margin-top: var(--space-4);
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-heading);
+}
+
+.scroller {
+  margin-top: var(--space-6);
+  overflow-x: auto;
+  background: var(--surface-raised);
+  border: var(--hairline) solid var(--border-strong);
+  /* A visible bar is the scroll affordance on phones; never hidden */
+  scrollbar-color: var(--border-strong) transparent;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.caption {
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  border-bottom: var(--hairline) solid var(--border);
+  caption-side: top;
+}
+
+.table th,
+.table td {
+  padding: var(--space-2) var(--space-4);
+  text-align: left;
+  vertical-align: baseline;
+}
+
+/* Key column */
+.corner,
+.rowHead {
+  width: 11rem;
+}
+
+.colHead {
+  padding-block: var(--space-2);
+  border-bottom: var(--hairline) solid var(--border-strong);
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-heading);
+}
+.colHead + .colHead,
+.table td + td {
+  border-left: var(--hairline) solid var(--border);
+}
+.colLink {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 2.75rem;
+  text-decoration: underline;
+  text-decoration-color: var(--border-strong);
+  text-decoration-thickness: var(--hairline);
+  text-underline-offset: 4px;
+}
+.colLink:hover {
+  text-decoration-color: var(--text);
+}
+.colRef {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.groupRow th {
+  padding-top: var(--space-5);
+  padding-bottom: var(--space-2);
+  font-weight: var(--weight-regular);
+  color: var(--text);
+  border-bottom: var(--hairline) solid var(--border);
+}
+/* Stays in view while the table scrolls sideways */
+.groupLabel {
+  position: sticky;
+  left: var(--space-4);
+}
+
+.rowHead {
+  font-weight: var(--weight-regular);
+  color: var(--text-faint);
+}
+
+.table td {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+.table tbody tr + tr th,
+.table tbody tr + tr td {
+  border-top: var(--hairline) dashed var(--border);
+}
+.table tbody tr.groupRow + tr th,
+.table tbody tr.groupRow + tr td {
+  border-top: 0;
+}
+
+.hint {
+  display: none;
+  margin-top: var(--space-4);
+  color: var(--text-faint);
+}
+
+/* ---- Responsive ---------------------------------------------------------- */
+@media (max-width: 1100px) {
+  .heading { grid-column: 1 / span 7; }
+  .intro { grid-column: 8 / span 5; }
+
+  /* Body too narrow for two columns: specs drop under the blurb */
+  .body {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+    row-gap: var(--space-5);
+  }
+  .text,
+  .specs {
+    grid-column: 1;
+  }
+}
+
+@media (max-width: 860px) {
+  .page {
+    padding-top: calc(var(--header-h) + var(--space-6));
+    padding-bottom: var(--space-8);
+  }
+
+  .head {
+    row-gap: var(--space-4);
+  }
+  .heading,
+  .intro {
+    grid-column: 1 / -1;
+  }
+
+  .register {
+    margin-top: var(--space-6);
+  }
+
+  /* Stack: image, then reference, name, blurb, specs and price */
+  .entry {
+    display: block;
+    padding-block: var(--space-5) var(--space-6);
+  }
+  .index {
+    display: none;
+  }
+  .image {
+    aspect-ratio: 5 / 4; /* = Range sheets on phones */
+  }
+  .body {
+    margin-top: var(--space-5);
+  }
+
+  .view {
+    flex: 1 1 100%;
+    justify-content: space-between;
+  }
+
+  .compare {
+    margin-top: var(--space-8);
+  }
+
+  /* The scroller bleeds to the screen edge so the cut-off column reads as "more" */
+  .scroller {
+    margin-inline: calc(-1 * var(--gutter));
+    border-inline: 0;
+  }
+  .table {
+    min-width: 40rem;
+  }
+  .corner,
+  .rowHead {
+    width: 8rem;
+  }
+  /* Keys stay put while the values scroll under them */
+  .rowHead,
+  .corner {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background: var(--surface-raised);
+    box-shadow: inset -1px 0 0 var(--border-strong);
+  }
+  .caption {
+    text-align: left;
+  }
+  .hint {
+    display: block;
+  }
+  .hint + .scroller {
+    margin-top: var(--space-3);
+  }
+}
+
+/* Phone: the caption spans the scrolled table; keep its text on screen */
+@media (max-width: 860px) {
+  .captionText {
+    position: sticky;
+    left: var(--space-4);
+    display: block;
+    max-width: calc(100vw - 2 * var(--space-4));
+  }
+}

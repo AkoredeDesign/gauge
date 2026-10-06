@@ -1,0 +1,92 @@
+.placeholder {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  /* Recessed (darker than the page) + dashed edge = clearly "image goes here",
+     never mistaken for a raised card */
+  background-color: var(--surface-strong);
+  background-image:
+    linear-gradient(var(--grid-major) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
+    linear-gradient(var(--grid-minor) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px);
+  background-size:
+    calc(var(--grid-cell) * 4) calc(var(--grid-cell) * 4),
+    calc(var(--grid-cell) * 4) calc(var(--grid-cell) * 4),
+    calc(var(--grid-cell) / 2) calc(var(--grid-cell) / 2),
+    calc(var(--grid-cell) / 2) calc(var(--grid-cell) / 2);
+  background-position: center;
+  border: var(--hairline) dashed var(--border-strong);
+}
+
+/* Registration marks */
+.corner {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: var(--text-muted);
+  border-style: solid;
+  border-width: 0;
+}
+.corner[data-pos="tl"] { top: 10px; left: 10px; border-top-width: 1px; border-left-width: 1px; }
+.corner[data-pos="tr"] { top: 10px; right: 10px; border-top-width: 1px; border-right-width: 1px; }
+.corner[data-pos="bl"] { bottom: 10px; left: 10px; border-bottom-width: 1px; border-left-width: 1px; }
+.corner[data-pos="br"] { bottom: 10px; right: 10px; border-bottom-width: 1px; border-right-width: 1px; }
+
+/* Centre crosshair */
+.crosshair {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 48px;
+  height: 48px;
+  translate: -50% -50%;
+  background:
+    linear-gradient(var(--border-strong), var(--border-strong)) center / 1px 100% no-repeat,
+    linear-gradient(var(--border-strong), var(--border-strong)) center / 100% 1px no-repeat;
+}
+.crosshair::after {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+}
+
+.meta {
+  position: absolute;
+  left: var(--space-5);
+  right: var(--space-5);
+  top: var(--space-6); /* top, so overlays anchored low don't hide it */
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.code {
+  color: var(--text);
+}
+
+/* Thumbnail: a finer grid and the code alone, bottom-left */
+.compact {
+  display: flex;
+  align-items: flex-end;
+  padding: var(--space-1);
+  background-size:
+    var(--grid-cell) var(--grid-cell),
+    var(--grid-cell) var(--grid-cell),
+    calc(var(--grid-cell) / 4) calc(var(--grid-cell) / 4),
+    calc(var(--grid-cell) / 4) calc(var(--grid-cell) / 4);
+}
+.compact .code {
+  font-size: 0.5rem; /* 8px: "IMG-P01-A2" on one line in a 64px thumbnail */
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.label {
+  color: var(--text-faint);
+  text-transform: none;
+  letter-spacing: 0.02em;
+  max-width: 36ch;
+}

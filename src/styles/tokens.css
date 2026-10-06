@@ -1,0 +1,181 @@
+/* ==========================================================================
+   GAUGE — design tokens
+   Single source of truth for color, type, space, and motion.
+   Components reference semantic tokens (--bg, --text, …), never raw palette.
+   ========================================================================== */
+
+:root {
+  /* ---- Palette: raw ------------------------------------------------------ */
+  --black-matte: #0b0c0d;
+  --graphite: #121416;
+  --gunmetal-900: #181b1e;
+  --gunmetal-800: #1f2326;
+  --gunmetal-700: #2a2f33;
+  --gunmetal-600: #3a4045; /* dark-theme hairline: 1.76:1 on graphite, matching light's 1.72 */
+  --steel-500: #6e757b;
+  --steel-400: #8c9399;
+  --steel-300: #b4babf;
+  --steel-100: #e6e8ea;
+
+  /* Drawing-paper concrete + graphite ink (light theme) */
+  --concrete-50: #f4f3ef;
+  --concrete-100: #e8e6e1;
+  --concrete-200: #dcd9d2;
+  --concrete-400: #b4b1aa;
+  --concrete-600: #7e7b75;
+  --ink-900: #1c1d1f;
+  --ink-800: #3a3c40;
+  --ink-700: #43474c;
+  --ink-600: #565a5f;
+
+  /* Signal accent — CTAs and one UI accent only. Never decorative. */
+  --signal: #ff5a1f;
+  --signal-hover: #ff7340;
+  --signal-ink: #0b0c0d; /* text on signal */
+
+  /* ---- Semantic ----------------------------------------------------------
+     Light "blueprint / concrete" theme. Contrast ratios (WCAG 2.x):
+       text  on bg 13.5 · raised 15.2 · placeholder 12.0
+       muted on bg  7.5 · raised  8.4 · placeholder 6.6
+       faint on bg  5.6 · raised  6.3 · placeholder 4.9   (all ≥ 4.5 AA)
+       border-strong vs bg 3.4 · raised 3.8              (UI ≥ 3:1)
+  ------------------------------------------------------------------------- */
+  --bg: var(--concrete-100);
+  --surface: var(--concrete-100);
+  --surface-raised: var(--concrete-50);   /* cards, bulletin box — lifts off the paper */
+  --surface-strong: var(--concrete-200);  /* recessed: image placeholders */
+  --surface-inverse: var(--ink-900);      /* inverse buttons */
+  --surface-inverse-hover: var(--ink-800);
+
+  --text: var(--ink-900);
+  --text-muted: var(--ink-700);
+  --text-faint: var(--ink-600);
+  --text-inverse: var(--concrete-50);
+
+  --border: var(--concrete-400);          /* hairline rules, dividers (decorative) */
+  --border-strong: var(--concrete-600);   /* inputs, outlines that must meet 3:1 */
+
+  --focus-ring: var(--ink-900);           /* orange is only 2.5:1 on concrete — fails 3:1 */
+
+  /* Photography: fixed in both themes (they follow the photo's tone, not the page's) */
+  --photo-light: var(--concrete-400);     /* frame fill before a warm-grey plate shot loads */
+  --photo-dark: var(--gunmetal-700);      /* … before a graphite scene shot loads */
+  --mark-on-light: var(--ink-700);        /* registration marks on plate shots */
+  --mark-on-dark: var(--steel-100);       /* registration marks on scene shots */
+
+  /* Tolerance band behind plotted readings (1.27:1 on raised) */
+  --chart-band: var(--concrete-200);
+
+  /* Calibration grid lines (backgrounds) — graphite on paper */
+  --grid-minor: rgb(28 29 31 / 0.10);
+  --grid-major: rgb(28 29 31 / 0.12);
+
+  /* ---- Typography -------------------------------------------------------- */
+  --font-display: var(--font-space-grotesk), "Helvetica Neue", Arial, sans-serif;
+  --font-body: var(--font-space-grotesk), "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  /* Fluid type scale (min @ 360px → max @ 1440px) */
+  --text-2xs: 0.6875rem; /* 11px — mono labels */
+  --text-xs: 0.75rem;    /* 12px */
+  --text-sm: 0.875rem;   /* 14px */
+  --text-base: 1rem;     /* 16px */
+  --text-md: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+  --text-lg: clamp(1.25rem, 1.1rem + 0.6vw, 1.625rem);
+  --text-xl: clamp(1.75rem, 1.4rem + 1.5vw, 2.75rem);
+  --text-2xl: clamp(2.5rem, 1.8rem + 3vw, 4.5rem);
+  --text-display: clamp(3.25rem, 1.9rem + 6.2vw, 8.5rem);
+
+  --leading-tight: 0.92;
+  --leading-snug: 1.15;
+  --leading-body: 1.55;
+
+  --tracking-display: -0.045em;
+  --tracking-heading: -0.025em;
+  --tracking-mono: 0.06em;  /* uppercase mono labels */
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-bold: 700;
+
+  /* ---- Space (4px base) -------------------------------------------------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+
+  /* ---- Layout ------------------------------------------------------------ */
+  --container-max: 90rem; /* 1440px */
+  --gutter: clamp(1rem, 4vw, 3rem); /* 16px on phones */
+  --header-h: 4.5rem;
+  --grid-cell: 40px; /* calibration grid module */
+
+  /* ---- Shape — machined, not soft ---------------------------------------- */
+  --radius-0: 0;
+  --radius-1: 2px;
+  --hairline: 1px;
+  /* Hard offset, no blur: a printed drop, not a glow. Cast down-left so it
+     lands on the edge that overhangs the plain page. */
+  --shadow-offset: -6px 6px 0 rgb(28 29 31 / 0.10);
+
+  /* ---- Motion (consumed by GSAP later) ----------------------------------- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 150ms;
+  --dur-base: 300ms;
+  --dur-slow: 700ms;
+
+  /* ---- Layers ------------------------------------------------------------ */
+  --z-base: 1;
+  --z-overlay: 10;
+  --z-header: 50;
+  --z-modal: 100;
+}
+
+/* ==========================================================================
+   Dark band — graphite / gunmetal / steel. Scope with data-theme="dark" on a
+   section; components keep using the same semantic tokens.
+   Contrast ratios (WCAG 2.x), checked separately, not inherited from light:
+     text  on bg 15.0 · raised 14.1 · recessed 12.9
+     muted on bg  9.4 · raised  8.8 · recessed  8.1
+     faint on bg  5.9 · raised  5.6 · recessed  5.1   (all ≥ 4.5 AA)
+     border-strong vs bg 4.0 · raised 3.7 · recessed 3.4  (UI ≥ 3:1)
+     border (decorative) vs bg 1.76 · raised 1.65   (light: 1.72 · 1.93)
+     chart-band vs raised 1.28                       (light: 1.27)
+   ========================================================================== */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: var(--graphite);
+  --surface: var(--graphite);
+  --surface-raised: var(--gunmetal-900);
+  --surface-strong: var(--gunmetal-800);
+  --surface-inverse: var(--steel-100);
+  --surface-inverse-hover: var(--steel-300);
+
+  --text: var(--steel-100);
+  --text-muted: var(--steel-300);
+  --text-faint: var(--steel-400);
+  --text-inverse: var(--graphite);
+
+  --border: var(--gunmetal-600);
+  --border-strong: var(--steel-500);
+
+  --focus-ring: var(--steel-100);
+  --chart-band: var(--gunmetal-700);
+
+  --grid-minor: rgb(230 232 234 / 0.05);
+  --grid-major: rgb(230 232 234 / 0.08);
+
+  /* A light offset would read as a glow on graphite */
+  --shadow-offset: -6px 6px 0 rgb(0 0 0 / 0.35);
+
+  background: var(--bg);
+  color: var(--text);
+}

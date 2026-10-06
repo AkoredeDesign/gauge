@@ -1,0 +1,85 @@
+.card {
+  width: 100%;
+  max-width: 22rem;
+  padding: var(--space-5);
+  /* Solid, not translucent: text contrast must not depend on what is behind it */
+  background: var(--surface-raised);
+  border: var(--hairline) solid var(--border-strong);
+  box-shadow: var(--shadow-offset);
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: var(--space-3);
+  margin-bottom: var(--space-4);
+  border-bottom: var(--hairline) solid var(--border);
+  color: var(--text-muted);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-heading);
+  line-height: var(--leading-snug);
+}
+
+.body {
+  margin-top: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+.form {
+  display: flex;
+  margin-top: var(--space-4);
+  border: var(--hairline) solid var(--border-strong);
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  padding: var(--space-3);
+  background: transparent;
+  border: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+}
+.input::placeholder {
+  color: var(--text-faint);
+}
+.input:focus-visible {
+  outline-offset: -2px;
+}
+
+/* Secondary action: ink, not signal — orange is reserved for the hero CTA */
+.submit {
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface-inverse);
+  color: var(--text-inverse);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  transition: background var(--dur-fast) var(--ease-out);
+}
+.submit:hover {
+  background: var(--surface-inverse-hover);
+}
+
+.confirm {
+  margin-top: var(--space-4);
+  padding: var(--space-3);
+  border: var(--hairline) solid var(--border-strong);
+  color: var(--text);
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+
+.fine {
+  margin-top: var(--space-3);
+  color: var(--text-faint);
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
