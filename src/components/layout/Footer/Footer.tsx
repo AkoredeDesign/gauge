@@ -1,5 +1,6 @@
 import Link from "next/link";
 import BagButton from "@/components/bag/BagButton";
+import BackToTop from "./BackToTop";
 import styles from "./Footer.module.css";
 
 // Only routes the site will have: /collection, product pages and the home
@@ -76,9 +77,9 @@ export default function Footer() {
         <div className={`mono ${styles.legal}`}>
           <span>© 2026 GAUGE</span>
           <span className={styles.rev}>Sheet 01/01 · Rev. 2026-10</span>
-          <a href="#main" className={styles.toTop}>
+          <BackToTop className={styles.toTop}>
             Back to top <span aria-hidden>↑</span>
-          </a>
+          </BackToTop>
         </div>
       </div>
     </footer>
