@@ -12,26 +12,6 @@
   background-color: var(--bg);
 }
 
-/* Calibration grid backdrop — minor 20px / major 160px, faded at the edges */
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background-image:
-    linear-gradient(var(--grid-major) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
-    linear-gradient(var(--grid-minor) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px);
-  background-size:
-    calc(var(--grid-cell) * 4) calc(var(--grid-cell) * 4),
-    calc(var(--grid-cell) * 4) calc(var(--grid-cell) * 4),
-    calc(var(--grid-cell) / 2) calc(var(--grid-cell) / 2),
-    calc(var(--grid-cell) / 2) calc(var(--grid-cell) / 2);
-  mask-image: radial-gradient(ellipse 80% 70% at 60% 45%, #000 30%, transparent 85%);
-  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 60% 45%, #000 30%, transparent 85%);
-}
-
 .inner {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
