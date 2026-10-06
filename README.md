@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GAUGE
 
-## Getting Started
+A concept e-commerce site for a fictional precision-instrument watch brand, inspired by the machinist and calibration world. Built as a portfolio project.
 
-First, run the development server:
+Live site: https://gauge-self.vercel.app
+
+## What this is
+
+A small storefront where the watches are presented like shop-floor instruments: spec sheets, tolerance charts and service records instead of lifestyle copy. GAUGE is not a real company. The watches, prices and calibration records are made up. The bag drawer works, but checkout is intentionally disabled, and no data is collected. The newsletter form confirms on screen and sends nothing.
+
+## What's in it
+
+- Home page with a calibration chart that animates through a five-position run
+- A service-record chart showing drift and reset between services
+- Product pages with variant switching (dial or strap) and an animated spec-sheet check
+- A collection page with a comparison table across the range
+- A persistent bag drawer (survives reloads)
+- Reduced-motion support: animations are skipped when the OS asks for less motion
+- An image pipeline that outputs AVIF and WebP at three sizes, shown in fixed-ratio frames so nothing shifts as images load
+
+## Stack
+
+- Next.js 16 (App Router) with React 19 and TypeScript
+- GSAP with `@gsap/react` for animation
+- Zustand (with its `persist` middleware) for the bag
+- CSS Modules and CSS custom properties for styling
+- `next/font` with Space Grotesk and JetBrains Mono
+- sharp for the image script (installed as a dependency of Next.js)
+- ESLint with `eslint-config-next`
+
+## Run it locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+`npm run images` regenerates the web images in `public/images/` from the originals in `gauge-images/`. The originals are not committed, so this only works if you have them. Outputs that are newer than their source are skipped.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Images
 
-## Learn More
+The product photography was generated with AI image tools for this concept and does not depict real products.
 
-To learn more about Next.js, take a look at the following resources:
+## Author
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Waliyullahi Akorede, Ecom Elevate (ecomelevate.pro)
