@@ -2,7 +2,7 @@
 
 A concept e-commerce site for a fictional precision-instrument watch brand, inspired by the machinist and calibration world. Built as a portfolio project.
 
-Live site: https://gauge-self.vercel.app
+Live site: https://gauge.ecomelevatehq.com
 
 ## What this is
 
@@ -45,4 +45,4 @@ The product photography was generated with AI image tools for this concept and d
 
 ## Author
 
-Waliyullahi Akorede, Ecom Elevate (ecomelevate.pro)
+Waliyullahi Akorede, Ecom Elevate (ecomelevatehq.com)
